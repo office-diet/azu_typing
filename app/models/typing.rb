@@ -1,0 +1,2 @@
+class Typing < ApplicationRecord
+end
