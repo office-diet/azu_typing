@@ -37,9 +37,17 @@
   </div>
 
   <input type="text" class="input" id="input" autocomplete="off">
+
+  <div class="score">
+    <div class="score-str">
+      SCORE：<span id="score-text" >0</span>
+    </div>
+      <div id="message">OK</div>
+  </div>
+
   <div class="books">
-    <%= link_to image_tag("azu-typing.jpg", class: "book"), "https://www.amazon.co.jp/%E3%81%84%E3%81%84%E6%B0%97%E5%88%86%E3%81%AB%E3%81%AA%E3%82%8B%E3%81%93%E3%81%A8%E3%81%A0%E3%81%91%E3%81%97%E3%81%8B%E3%81%97%E3%81%AA%E3%81%8F%E3%81%A6%E3%81%84%E3%81%84%EF%BC%81%E7%84%A1%E6%95%B5%E3%81%AB%E3%81%AA%E3%81%A3%E3%81%A6%E7%94%9F%E3%81%8D%E3%81%9F%E3%81%84%E3%82%88%E3%81%86%E3%81%AB%E7%94%9F%E3%81%8D%E3%82%8B%E6%96%B9%E6%B3%95%E3%80%82-20%E5%88%86%E3%81%A7%E8%AA%AD%E3%82%81%E3%82%8B%E3%82%B7%E3%83%AA%E3%83%BC%E3%82%BA-%E3%81%BC%E3%81%B8%E3%81%BF/dp/B087S8XXW6/ref=as_li_ss_tl?_encoding=UTF8&qid=1593919527&sr=1-3&linkCode=sl1&tag=azusan9190c-22&linkId=47e877bb2cc65ca14aeb4ed8a668011f&language=ja_JP", target: :_blank %>
-    <%= link_to image_tag("azu-typing.jpg", class: "book"), "https://www.amazon.co.jp/%E3%81%84%E3%81%84%E6%B0%97%E5%88%86%E3%81%AB%E3%81%AA%E3%82%8B%E3%81%93%E3%81%A8%E3%81%A0%E3%81%91%E3%81%97%E3%81%8B%E3%81%97%E3%81%AA%E3%81%8F%E3%81%A6%E3%81%84%E3%81%84%EF%BC%81%E7%84%A1%E6%95%B5%E3%81%AB%E3%81%AA%E3%81%A3%E3%81%A6%E7%94%9F%E3%81%8D%E3%81%9F%E3%81%84%E3%82%88%E3%81%86%E3%81%AB%E7%94%9F%E3%81%8D%E3%82%8B%E6%96%B9%E6%B3%95%E3%80%82-20%E5%88%86%E3%81%A7%E8%AA%AD%E3%82%81%E3%82%8B%E3%82%B7%E3%83%AA%E3%83%BC%E3%82%BA-%E3%81%BC%E3%81%B8%E3%81%BF/dp/B087S8XXW6/ref=as_li_ss_tl?_encoding=UTF8&qid=1593919527&sr=1-3&linkCode=sl1&tag=azusan9190c-22&linkId=47e877bb2cc65ca14aeb4ed8a668011f&language=ja_JP", target: :_blank %>
-    <%= link_to image_tag("azu-typing.jpg", class: "book"), "https://www.amazon.co.jp/%E3%81%84%E3%81%84%E6%B0%97%E5%88%86%E3%81%AB%E3%81%AA%E3%82%8B%E3%81%93%E3%81%A8%E3%81%A0%E3%81%91%E3%81%97%E3%81%8B%E3%81%97%E3%81%AA%E3%81%8F%E3%81%A6%E3%81%84%E3%81%84%EF%BC%81%E7%84%A1%E6%95%B5%E3%81%AB%E3%81%AA%E3%81%A3%E3%81%A6%E7%94%9F%E3%81%8D%E3%81%9F%E3%81%84%E3%82%88%E3%81%86%E3%81%AB%E7%94%9F%E3%81%8D%E3%82%8B%E6%96%B9%E6%B3%95%E3%80%82-20%E5%88%86%E3%81%A7%E8%AA%AD%E3%82%81%E3%82%8B%E3%82%B7%E3%83%AA%E3%83%BC%E3%82%BA-%E3%81%BC%E3%81%B8%E3%81%BF/dp/B087S8XXW6/ref=as_li_ss_tl?_encoding=UTF8&qid=1593919527&sr=1-3&linkCode=sl1&tag=azusan9190c-22&linkId=47e877bb2cc65ca14aeb4ed8a668011f&language=ja_JP", target: :_blank %>
+    <% 3.times do %>
+      <%= link_to image_tag("azu-typing.jpg", class: "book"), "https://www.amazon.co.jp/%E3%81%84%E3%81%84%E6%B0%97%E5%88%86%E3%81%AB%E3%81%AA%E3%82%8B%E3%81%93%E3%81%A8%E3%81%A0%E3%81%91%E3%81%97%E3%81%8B%E3%81%97%E3%81%AA%E3%81%8F%E3%81%A6%E3%81%84%E3%81%84%EF%BC%81%E7%84%A1%E6%95%B5%E3%81%AB%E3%81%AA%E3%81%A3%E3%81%A6%E7%94%9F%E3%81%8D%E3%81%9F%E3%81%84%E3%82%88%E3%81%86%E3%81%AB%E7%94%9F%E3%81%8D%E3%82%8B%E6%96%B9%E6%B3%95%E3%80%82-20%E5%88%86%E3%81%A7%E8%AA%AD%E3%82%81%E3%82%8B%E3%82%B7%E3%83%AA%E3%83%BC%E3%82%BA-%E3%81%BC%E3%81%B8%E3%81%BF/dp/B087S8XXW6/ref=as_li_ss_tl?_encoding=UTF8&qid=1593919527&sr=1-3&linkCode=sl1&tag=azusan9190c-22&linkId=47e877bb2cc65ca14aeb4ed8a668011f&language=ja_JP", target: :_blank %>
+    <% end %>
   </div>
 </div>
