@@ -23,7 +23,7 @@ function setTypings(){
     if (e.keyCode === 13 && gameStarted == false){
       gameStarted = true;
       repeat.disabled = true;
-      typings.gameStart(array, repeat.value)
+      typings.gameStart(input, array, repeat.value)
       input.value = "";
     } else if ( e.keyCode === 13 ) {
       typings.check(input.value);
@@ -32,14 +32,14 @@ function setTypings(){
   });
 };
 
+function showCount( num , delay) {
+  const repeatCount = document.getElementById("repeat-count");
+  repeatCount.textContent = num;
+  showAndHide(repeatCount, delay);
+}
 
 function showMessage(boolean) {
   const message = document.getElementById("message");
-  if (message.classList.contains("animate")){
-    return false;
-  } else {
-    message.classList.add("animate");
-  }
   if ( boolean === true ) {
     message.textContent = "OK";
     message.style.backgroundColor = "red";
@@ -47,20 +47,32 @@ function showMessage(boolean) {
     message.textContent = "おしいよ！"
     message.style.backgroundColor = "blue";
   }
-  message.animate({opacity: 1}, 101);
+  showAndHide(message);
+}
+
+function showAndHide(elem) {
+  if (elem.classList.contains("animate")){
+    return false;
+  } else {
+    elem.classList.add("animate");
+  }
+  elem.animate({opacity: 1}, 101);
   setTimeout(() => {
-    message.style.opacity = "1";
+    elem.style.opacity = "1";
   }, 100);
 
   setTimeout(() => {
-    message.animate({opacity: 0}, 501);
+    elem.animate({opacity: 0}, 501 );
     setTimeout(() => {
-      message.style.opacity = "0";
-      message.classList.remove("animate")
-    }, 500);
-  }, 400);
+      elem.style.opacity = "0";
+      elem.classList.remove("animate")
+    }, 500 );
+  }, 400 );
 }
 
+function calcTyping(start, end, length) {
+  return length / ( (end - start) / 1000 )
+}
 
 class TextControll {
   constructor(original, hiragana, after){
@@ -101,7 +113,6 @@ class TextControll {
   }
 
   check(str) {
-    console.log(this.progress);
     if (str == "" || this.progress >= this.length) {
       return false;
     }
@@ -129,7 +140,7 @@ class TextControll {
     return this.score;
   }
   getStrLength() {
-    return this.strlength;
+    return this.strLength;
   }
 }
 
@@ -142,25 +153,71 @@ class Typings {
     
     this.typing = new TextControll(original, hiragana, false);
     this.afterTyping = new TextControll(afterOriginal, afterHiragana, true);
+    this.modal = new Modal();
     this.score = document.getElementById("score-text");
     this.repeated = 0;
   }
 
-  gameStart(array, repeat) {
+  gameStart(input, array, repeat) {
+    this.input = input;
     this.repeat = repeat;
     this.typing.gameStart(array);
     this.afterTyping.gameStart(array);
+    this.startTime = new Date();
   }
   check(str) {
     if ( this.typing.check(str) == true ) {
       this.repeated += 1;
+      if (this.repeat != 1) {
+        showCount(this.repeated);
+      }
       if (this.repeat == this.repeated) {
         this.repeated = 0;
         this.typing.next();
         this.afterTyping.next();
       }
     }
-    this.score.textContent = (this.typing.getScore() * 10000).toLocaleString();
+    this.score.textContent = (this.typing.getScore()).toLocaleString();
+    if ( this.typing.finished() == true ) {
+      this.input.disabled = true;
+      this.endTime = new Date();
+      const sps = calcTyping(this.startTime, this.endTime, this.typing.getStrLength())
+      
+      this.modal.setModal( sps, this.typing.getScore() );
+      this.modal.showModal();
+      
+      console.log( sps.toLocaleString() );
+      console.log( this.typing.getScore() );
+      console.log( Math.round(this.typing.getScore() * sps ) );
+      
+    }
+  }
+}
+
+class Modal {
+  constructor() {
+    this.mask = document.getElementById("mask");
+    this.modal = document.getElementById("modal");
+    this.sps = document.getElementById("modal-sps-text")
+    this.score = document.getElementById("modal-score-text")
+    this.ranking = document.getElementById("modal-ranking-text")
   }
 
+  setModal (sps, score) {
+    this.sps.textContent = sps.toLocaleString();
+    this.score.textContent = Math.round( sps * score );
+    this.modal.insertAdjacentHTML('beforeend',
+      `<a href="https://twitter.com/intent/tweet?hashtags=AzuTyping&text=${sps.toLocaleString()}文字/秒-${Math.round( sps * score )}azu-pts&url=https://azu-typing.herokuapp.com/" 
+        class="tweet" target="blank">
+        ツイッターで報告する！
+      </a>`
+    )
+  }
+
+  showModal () {
+    this.mask.classList.add("show");
+    this.modal.classList.add("show");
+    document.querySelector("html").style.overflow = "hidden"
+    document.querySelector("body").style.overflow = "hidden"
+  }
 }
