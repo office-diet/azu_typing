@@ -207,7 +207,7 @@ class Modal {
     this.sps.textContent = sps.toLocaleString();
     this.score.textContent = Math.round( sps * score );
     this.modal.insertAdjacentHTML('beforeend',
-      `<a href="https://twitter.com/intent/tweet?hashtags=AzuTyping&text=${sps.toLocaleString()}文字/秒-${Math.round( sps * score )}azu-pts&url=https://azu-typing.herokuapp.com/" 
+      `<a href="https://twitter.com/intent/tweet?hashtags=AzuTyping&text=${Math.round( sps * score )}azu-pts（${sps.toLocaleString()}文字/秒）&url=https://azu-typing.herokuapp.com/" 
         class="tweet" target="blank">
         ツイッターで報告する！
       </a>`
