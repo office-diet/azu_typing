@@ -42,9 +42,9 @@ categories.each do |category|
   Category.create(name: category)
 end
 
-22.times do |num|
-  typing_id = num + 1
-  4.times do |cat|
-    TypingsCategory.create(typing_id: num + 1, category_id: cat + 1)
-  end
-end
+# 22.times do |num|
+#   typing_id = num + 1
+#   4.times do |cat|
+#     TypingsCategory.create(typing_id: num + 1, category_id: cat + 1)
+#   end
+# end
