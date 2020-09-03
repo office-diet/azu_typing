@@ -4,8 +4,21 @@
       <%= link_to image_tag("azu-icon.jpg", class: "icon"), "https://twitter.com/bohemi_azusa", target: :_blank %>
       AZU-TYPING
     </div>
-    <div class="repeat">
-      リピート回数
+
+    <div class="category">
+      <div class="category-text">
+        カテゴリ
+      </div>
+
+      <select id="category">
+          <option value="0">全てのアファーメーション</option>
+        <% @categories.each do |category| %>
+          <option value="<%= category.id %>"><%= category.name%></option>
+        <% end %>
+      </select>
+      <div class="repeat">
+        リピート
+      </div>
       <select id="repeat">
         <option value="1">1</option>
         <option value="2">2</option>
@@ -36,7 +49,7 @@
     <div id="repeat-count">0</div>
   </div>
 
-  <input type="text" class="input" id="input" autocomplete="off">
+  <input placeholder="Select and Press Enter to Heaven" type="text" class="input" id="input" autocomplete="off">
 
   <div class="score">
     <div class="score-str">

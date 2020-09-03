@@ -1,36 +1,48 @@
 window.addEventListener("turbolinks:load", setTypings);
 
 function setTypings(){
-  
-  // 配列の取得
-  const XHR = new XMLHttpRequest();
-  let array = "" ;
-
-  XHR.open("GET", `/typings/テスト`, true);
-  XHR.responseType = "json";
-  XHR.send();
-  XHR.onload = () => {
-    array = XHR.response["typings"];
-  };
 
   // インプットボックへイベントの埋め込み
   const input = document.getElementById("input");
   const repeat = document.getElementById("repeat");
+  const category = document.getElementById("category");
   let gameStarted = false;
   const typings = new Typings();
 
   input.addEventListener('keydown', function(e){
     if (e.keyCode === 13 && gameStarted == false){
+      document.getElementById("mask").classList.add("show");
+      input.placeholder = "";
       gameStarted = true;
       repeat.disabled = true;
-      typings.gameStart(input, array, repeat.value)
+      category.disabled = true;
       input.value = "";
+
+      getTypings(input, typings, category.value, repeat.value);
+
+      
+      
     } else if ( e.keyCode === 13 ) {
       typings.check(input.value);
       input.value = "";
     }
   });
 };
+
+function getTypings (input, typings, category, repeat ) {
+  // jsonの取得
+  const XHR = new XMLHttpRequest();
+  let array = "" ;
+  XHR.open("GET", `/typings/${category}`, true);
+  XHR.responseType = "json";
+  XHR.send();
+  XHR.onload = () => {
+    array = XHR.response["typings"];
+    console.log(array);
+    document.getElementById("mask").classList.remove("show");
+    typings.gameStart(input, array, repeat)
+  };
+}
 
 function showCount( num , delay) {
   const repeatCount = document.getElementById("repeat-count");
