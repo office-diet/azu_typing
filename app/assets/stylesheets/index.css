@@ -125,6 +125,13 @@ input {
   width: auto;
   border-radius: 50%;
   transform: translateY(10px);
+  transition: all 1000s;
+}
+
+.icon:hover{
+  opacity: 0.9;
+  transform: scale(100);
+  z-index: 100;
 }
 
 .score {
@@ -169,15 +176,22 @@ input {
 }
 
 .books {
-  margin: 0 auto;
+  margin: 50px auto 0;
   width: 800px;
   display: flex;
   justify-content: space-between;
 }
 .book {
-  height: 300px;
-  width: auto;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  height: auto;
+  width: 220px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  transition: all 1000s;
+}
+
+.book:hover{
+  opacity: 0.9;
+  transform: scale(100);
+  z-index: 10;
 }
 
 .mask {
