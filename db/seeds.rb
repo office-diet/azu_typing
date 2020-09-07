@@ -46,9 +46,9 @@ categories.each_with_index do |category, num|
   Category.create(name: category, order: num + 1 )
 end
 
-22.times do |num|
-  typing_id = num + 1
-  5.times do |cat|
-    TypingsCategory.create(typing_id: num + 1, category_id: cat + 1)
-  end
-end
+# 22.times do |num|
+#   typing_id = num + 1
+#   5.times do |cat|
+#     TypingsCategory.create(typing_id: num + 1, category_id: cat + 1)
+#   end
+# end
