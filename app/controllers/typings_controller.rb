@@ -36,7 +36,7 @@ class TypingsController < ApplicationController
       TypingsCategory.where(typing_id: typing.id).destroy_all
       params_count.times do |num|
         if typing_params.permit("category_#{ num + 1 }").present?
-          TypingsCategory.create(typing_id: typing.id, category_id: num + 1)
+          TypingsCategory.create(typing_id: typing.id, category_id: num.to_i + 1)
         end
       end
       redirect_to new_typing_path
