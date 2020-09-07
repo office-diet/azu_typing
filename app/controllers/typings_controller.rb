@@ -11,7 +11,7 @@ class TypingsController < ApplicationController
 
   def create
     typing_params = params.require(:typing)
-    params_count = Typing.columns.count + Category.count
+    params_count = Typing.columns.count + Category.ids.max
     typing = Typing.where(typing_params.permit(:original, :hiragana)).first_or_initialize
     if typing.save
       TypingsCategory.where(typing_id: typing.id).destroy_all
@@ -30,7 +30,7 @@ class TypingsController < ApplicationController
 
   def update
     typing_params = params.require(:typing)
-    params_count = Typing.columns.count + Category.count
+    params_count = Typing.columns.count + Category.ids.max
     typing = Typing.find(params[:id])
     if typing.update(typing_params.permit(:original, :hiragana))
       TypingsCategory.where(typing_id: typing.id).destroy_all
