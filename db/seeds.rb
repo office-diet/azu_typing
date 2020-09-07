@@ -6,7 +6,11 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-categories = ["仕事のアファーメーション", "健康のアファーメーション", "人間関係のアファーメーション", "お金のアファーメーション"]
+categories = [
+  "全てのアファーメーション",
+  "仕事のアファーメーション", "健康のアファーメーション",
+  "人間関係のアファーメーション", "お金のアファーメーション"
+]
 
 typings =[
   ["二度あることは三度ある。", "にどあることはさんどある。"],
@@ -27,7 +31,7 @@ typings =[
   ["私はいつも自信に溢れている。", "わたしはいつもじしんにあふれている。"],
   ["私には助けてくれる友人がたくさんいる。", "わたしにはたすけてくれるゆうじんがたくさんいる。"],
   ["私は世の中の人から必要とされている。", "わたしはよのなかのひとからひつようとされている。"],
-  ["私には意思がある。", "わたしにはいしがある。"],
+  ["私には意志がある。", "わたしにはいしがある。"],
   ["大きく考えなさい。", "おおきくかんがえなさい。"],
   ["危険だ、という道は必ず、自分の行きたい道なのだ。", "きけんだ、というみちはかならず、じぶんのいきたいみちなのだ。"],
   ["私は凄くなる道のりを自分の足でいま歩いている。", "わたしはすごくなるみちのりをじぶんのあしでいまあるいている。"]
@@ -38,13 +42,13 @@ typings.each do |typing|
   Typing.create(original: typing[0], hiragana: typing[1] )
 end
 
-categories.each do |category|
-  Category.create(name: category)
+categories.each_with_index do |category, num|
+  Category.create(name: category, order: num + 1 )
 end
 
 22.times do |num|
   typing_id = num + 1
-  4.times do |cat|
+  5.times do |cat|
     TypingsCategory.create(typing_id: num + 1, category_id: cat + 1)
   end
 end

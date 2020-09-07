@@ -11,7 +11,6 @@
       </div>
 
       <select id="category">
-          <option value="0">全てのアファーメーション</option>
         <% @categories.each do |category| %>
           <option value="<%= category.id %>"><%= category.name%></option>
         <% end %>
@@ -81,4 +80,11 @@
       <span id="modal-ranking-text">1</span>位／全宇宙
     </div>
   </div>
+
+  <%= form_with model: Score.new, url: typings_score_path, class: "score-form", id: "score-form" do |f| %>
+    <%= f.text_field :score %>
+    <%= f.text_field :sps %>
+    <%= f.text_field :category_id %>
+    <%= f.submit %>
+  <% end %>
 </div>

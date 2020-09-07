@@ -2,6 +2,10 @@ window.addEventListener("turbolinks:load", setTypings);
 
 function setTypings(){
 
+  if (location.pathname == "/typings/new") {
+    return false;
+  }
+
   // インプットボックへイベントの埋め込み
   const input = document.getElementById("input");
   const repeat = document.getElementById("repeat");
@@ -19,8 +23,6 @@ function setTypings(){
       input.value = "";
 
       getTypings(input, typings, category.value, repeat.value);
-
-      
       
     } else if ( e.keyCode === 13 ) {
       typings.check(input.value);
@@ -38,9 +40,8 @@ function getTypings (input, typings, category, repeat ) {
   XHR.send();
   XHR.onload = () => {
     array = XHR.response["typings"];
-    console.log(array);
     document.getElementById("mask").classList.remove("show");
-    typings.gameStart(input, array, repeat)
+    typings.gameStart(input, array, category, repeat)
   };
 }
 
@@ -170,8 +171,9 @@ class Typings {
     this.repeated = 0;
   }
 
-  gameStart(input, array, repeat) {
+  gameStart(input, array, category, repeat) {
     this.input = input;
+    this.category = category;
     this.repeat = repeat;
     this.typing.gameStart(array);
     this.afterTyping.gameStart(array);
@@ -194,14 +196,19 @@ class Typings {
       this.input.disabled = true;
       this.endTime = new Date();
       const sps = calcTyping(this.startTime, this.endTime, this.typing.getStrLength())
-      
-      this.modal.setModal( sps, this.typing.getScore() );
-      this.modal.showModal();
-      
-      console.log( sps.toLocaleString() );
-      console.log( this.typing.getScore() );
-      console.log( Math.round(this.typing.getScore() * sps ) );
-      
+      document.getElementById("score_score").value = Math.round( sps * this.typing.getScore() );
+      document.getElementById("score_sps").value = sps.toLocaleString();
+      document.getElementById("score_category_id").value = this.category;
+      const formData = new FormData(document.getElementById("score-form"));
+      const XHR = new XMLHttpRequest();
+      XHR.open("POST", "/typings/score", true);
+      XHR.responseType = "json";
+      XHR.send(formData);
+      XHR.onload = () => {
+        const rank = XHR.response["rank"]
+        this.modal.setModal( sps, this.typing.getScore(), rank );
+        this.modal.showModal();    
+      }
     }
   }
 }
@@ -215,11 +222,12 @@ class Modal {
     this.ranking = document.getElementById("modal-ranking-text")
   }
 
-  setModal (sps, score) {
+  setModal (sps, score, rank) {
     this.sps.textContent = sps.toLocaleString();
-    this.score.textContent = Math.round( sps * score );
+    this.score.textContent = Math.round( sps * score ).toLocaleString();
+    this.ranking.textContent = rank
     this.modal.insertAdjacentHTML('beforeend',
-      `<a href="https://twitter.com/intent/tweet?hashtags=AzuTyping&text=${Math.round( sps * score )}azu-pts（${sps.toLocaleString()}文字/秒）&url=https://azu-typing.herokuapp.com/" 
+      `<a href="https://twitter.com/intent/tweet?hashtags=AzuTyping&text=${Math.round( sps * score ).toLocaleString()}azu-pts（${sps.toLocaleString()}文字/秒-全宇宙${rank}位！）&url=https://azu-typing.herokuapp.com/" 
         class="tweet" target="blank">
         ツイッターで報告する！
       </a>`

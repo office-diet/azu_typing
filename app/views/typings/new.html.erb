@@ -1,0 +1,86 @@
+<header>
+  <div class="header">
+    <div class="logo">
+      <%= link_to image_tag("azu-icon.jpg", class: "icon"), "https://twitter.com/bohemi_azusa", target: :_blank %>
+      AZU-TYPING　管理画面だよ〜
+    </div>
+  </div>
+</header>
+
+<div class="main new">
+
+  <div class="category-container">
+    <div class="category-title">
+      カテゴリ登録・編集画面だよ〜
+    </div>
+    <%= form_with model: @category_new, url: category_create_typings_path, class: "category-new-form" do |f| %>
+      <%= f.text_field :name, placeholder: "カテゴリ追加", class: "category-new-input" %>
+      <%= f.text_field :order, placeholder: "並び順", class: "category-new-input-order" %>
+      <%= f.submit "追加", class: "category-new-btn btn"%>
+    <% end %>
+    <% @categories_all.each do |category| %>
+      <div class="category-edit-forms">
+        <%= form_with model: category, url: category_update_typings_path(id: category.id), class: "category-edit-form" do |f| %>
+          <%= f.text_field :name, placeholder: "カテゴリ追加", class: "category-edit-input" %>
+          <%= f.text_field :order, placeholder: "並び順", class: "category-edit-input-order" %>
+          <%= f.submit "更新", class: "category-edit-btn" %>
+        <% end %>
+        <%= form_with model: category, url: category_destroy_typings_path(id: category.id),method: :delete, class: "category-destroy-form" do |f| %>
+          <%= f.submit "削除", class: "category-destroy-btn" %>
+        <% end %>
+      </div>
+    <% end %>
+  <div>
+
+  <div class="new-container">
+    <div class="new-title">
+      文章新規登録だよ〜
+    </div>
+    <%= form_with model: @typing_new, url: typings_path, class: "new-form", id: "new-form" do |f| %>
+      <div class="input">
+        <%= f.text_field :original, class: "new-original", placeholder: "漢字含む" %>
+        <%= f.text_field :hiragana, class: "new-hiragana", placeholder: "ひらがな" %>
+      </div>
+      <div class="btns">
+        <div class="checks">
+          <% @categories_all.each do |category| %>
+            <input type="checkbox" class="check" name="typing[category_<%= category.id %>]" id="new_<%= category.id %>" >
+            <label for="new_<%= category.id %>"><%= category.name %></label>
+          <% end %>
+        </div>
+        <%= f.submit "新規登録", class: "new-btn" %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="edit-container">
+    <div class="edit-title">
+      <div>
+        文章編集画面だよ〜
+      </div>
+      <div class="display-btn" id="display-btn">
+        表示切り替え
+      </div>
+    </div>
+    <% @typing_all.each do |typing| %>
+      <%= form_with model: typing, url: typing_path(typing.id), class: "edit-form", id: "new-form" do |f| %>
+        <div class="input">
+          <%= f.text_field :original, class: "edit-original" %>
+          <%= f.text_field :hiragana, class: "edit-hiragana" %>
+        </div>
+        <div class="btns">
+          <div class="checks">
+            <% @categories_all.each do |category| %>
+              <input type="checkbox" class="check" name="typing[category_<%= category.id %>]" id="edit_<%= "#{typing.id}_#{category.id}" %>" <%= "checked" if @typings_categories.where(typing_id: typing.id, category_id: category.id).count > 0 %>>
+              <label for="edit_<%= "#{typing.id}_#{category.id}" %>"><%= category.name %></label>
+            <% end %>
+          </div>
+          <%= f.submit "更新", class: "edit-btn" %>
+        <% end %>
+        <%= form_with model: typing, url: typing_path(typing.id), method: :delete, class: "del-form" do |f| %>
+          <%= f.submit "削除", class: "del-btn" %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>

@@ -197,11 +197,13 @@ input {
 .mask {
   width: auto;
   height: auto;
-  position: absolute;
+  position: fixed;
   left: 0;
   right: 0;
   top: 0;
   bottom: 0;
+  width: 100%;
+  height: 100%;
   background-color: rgba(0, 0, 0, 0.3);
   display: none;
 }
@@ -264,4 +266,214 @@ input {
   font-weight: bold;
   color: white;
   text-align: center;
+}
+
+
+.score-form {
+  display: none;
+}
+
+
+/* edit画面 */
+
+.main.new {
+  width: 1200px;
+}
+
+.category-title,
+.new-title,
+.edit-title {
+  font-size: 24px;
+  font-weight: bold;
+  width: 100%;
+  padding: 5px 10px;
+  background-color: #fad;
+  border-radius: 4px;
+}
+
+.category-new-form,
+.category-edit-form {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 10px;
+}
+
+.category-new-input,
+.category-new-input-order,
+.category-edit-input,
+.category-edit-input-order {
+  width: 1200px;
+  font-size: 16px;
+  margin: 5px;
+  border-radius: 4px;
+  padding: 5px;
+  box-shadow: unset;
+  border: 1px solid #aaf;
+  height: 35px;
+}
+
+.category-new-input-order,
+.category-edit-input-order {
+  width: 70px;
+}
+.category-edit-form {
+  width: 1040px;
+}
+.category-destroy-form {
+  width: 120px;
+  padding-left: 0;
+  display: flex;
+  padding: 5px 30px 5px 0;
+}
+
+.category-edit-forms {
+  width: 1140px;
+  display: flex;
+}
+
+.edit-title {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.display-btn {
+  color: white;
+  font-size: 16px;
+  font-weight: unset;
+  border-radius: 4px;
+  background-color:red;
+  padding: 5px 10px;
+
+}
+
+.display-btn:hover {
+  opacity: 0.8;
+}
+
+.new-form,
+.edit-form {
+  width: 100%;
+  padding: 10px 5px 0;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  transition: all 0.2s;
+}
+
+.del-form {
+  display: flex;
+}
+
+.edit-form:not(:last-child) {
+  border-bottom: 3px solid #bbd;
+}
+.edit-form.hide {
+  border-bottom: none;
+  overflow:hidden;
+  height: 40px;
+  transition: all 0.2s;
+}
+
+.input {
+  display: flex;
+}
+
+.new-original, 
+.new-hiragana,
+.edit-original,
+.edit-hiragana {
+  width: 800px;
+  font-size: 16px;
+  margin: 0 5px;
+  border-radius: 4px;
+  padding: 5px;
+  box-shadow: unset;
+  border: 1px solid #aaf;
+}
+
+.category-new-btn,
+.category-edit-btn,
+.category-destroy-btn,
+.new-btn,
+.edit-btn,
+.del-btn {
+  width: 100px;
+  font-size: 14px;
+  font-weight: bold;
+  color: white;
+  margin: 5px;
+  border-radius: 4px;
+  padding: 5px;
+  box-shadow: unset;
+  background-color: red;
+}
+
+.category-new-btn,
+.category-edit-btn,
+.category-destroy-btn{
+  height: 35px;
+}
+
+
+.category-new-btn:hover,
+.category-edit-btn:hover,
+.category-destroy-btn:hover,
+.new-btn:hover,
+.edit-btn:hover,
+.del-btn:hover {
+  opacity: 0.8;
+}
+
+.edit-btn,
+.del-btn {
+  width: 60px;
+}
+
+.category-destroy-btn,
+.del-btn {
+  background-color: black;
+  text-align: center;
+}
+
+.category-edit-btn {
+  margin-right: 0;
+}
+
+.del-text {
+  margin: auto;
+}
+
+.btns {
+  display: flex;
+  justify-content: space-between;
+}
+.checks {
+  user-select: none;
+  background-color: white;
+  border-radius: 4px;
+  border: 1px solid #aaf;
+  margin: 5px 0 5px 5px;
+  width: auto;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.check {
+  display: none;
+}
+
+label {
+  background-color: #acf;
+  border-radius: 4px;
+  font-size: 14px;
+  color: white;
+  font-weight: bold;
+  padding: 5px;
+  margin: 5px;
+  transition: all 0.2s;
+}
+
+input[type="checkbox"]:checked + label{
+  background-color: #37f;
 }
