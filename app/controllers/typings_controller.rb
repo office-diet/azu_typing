@@ -65,7 +65,6 @@ class TypingsController < ApplicationController
   end
 
   def category_destroy
-    binding.pry
     category = Category.find(params[:id])
     category.destroy
     redirect_to new_typing_path
@@ -80,7 +79,6 @@ class TypingsController < ApplicationController
   end
 
   def score
-    # binding.pry
     score = Score.new(score_params)
     if score.save
       rank = Score.where("score > ?", score.score ).count + 1
